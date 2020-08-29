@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddzb.coppermall.portal.dao.SysDictionaryDao">
+    <resultMap id="sysDictionaryResultMap" type="com.ddzb.coppermall.model.SysDictionary"
+               extends="com.ddzb.coppermall.mapper.SysDictionaryMapper.BaseResultMap">
+    </resultMap>
+
+
+    <select id="selectDictionaryByParent" resultMap="sysDictionaryResultMap">
+        SELECT
+            s1.`id`,s1.`code`,s1.`name`
+        FROM sys_dictionary s1 WHERE 100 > s1.`code` AND s1.is_flag = 1 ORDER BY s1.`code` ASC
+    </select>
+
+
+
+
+
+</mapper>

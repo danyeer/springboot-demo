@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddzb.coppermall.portal.dao.SysDynamicInfoDao">
+    <resultMap id="dynamicInfo1ResultMap" type="com.ddzb.coppermall.portal.vo.SysDynamic1Vo">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="images" jdbcType="VARCHAR" property="images"/>
+        <result column="abstracts" jdbcType="VARCHAR" property="abstracts"/>
+
+    </resultMap>
+
+    <resultMap id="dynamicInfo2ResultMap" type="com.ddzb.coppermall.portal.vo.SysDynamic2Vo">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+
+    </resultMap>
+
+    <select id="queryDynamic1List" resultMap="dynamicInfo1ResultMap">
+        SELECT s1.id,s1.abstracts,s1.images,s1.title FROM sys_dynamic_info s1 WHERE s1.type=1 AND s1.`status` = 1
+        ORDER BY s1.id DESC
+
+    </select>
+
+
+    <select id="queryDynamic2List" resultMap="dynamicInfo2ResultMap">
+        SELECT s1.id,s1.title FROM sys_dynamic_info s1 WHERE s1.type=2 AND s1.`status` = 1
+        ORDER BY s1.id DESC
+
+    </select>
+
+
+</mapper>

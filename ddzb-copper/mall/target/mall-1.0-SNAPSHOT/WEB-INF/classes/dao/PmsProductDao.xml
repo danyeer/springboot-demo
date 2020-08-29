@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddzb.coppermall.portal.dao.PmsProductDao">
+    <resultMap id="productAuctionListResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductAuctionVo"
+               extends="com.ddzb.coppermall.mapper.PmsProductMapper.BaseResultMap">
+        <result column="auctionStatus" jdbcType="INTEGER" property="auctionStatus"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+
+
+    </resultMap>
+
+    <resultMap id="deliveryListResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductDeliveryVo">
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="id" jdbcType="BIGINT" property="id"/>
+
+    </resultMap>
+
+    <resultMap id="productAuctionDetailResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductAuctionDetailVo"
+               extends="com.ddzb.coppermall.mapper.PmsProductMapper.ResultMapWithBLOBs">
+        <result column="auctionStatus" jdbcType="INTEGER" property="auctionStatus"/>
+        <result column="productCategoryParentName" jdbcType="VARCHAR" property="productCategoryParentName"/>
+
+        <result column="businessRegistered" jdbcType="VARCHAR" property="businessRegistered"/>
+        <result column="businessMainBusiness" jdbcType="VARCHAR" property="businessMainBusiness"/>
+        <result column="businessDesc" jdbcType="VARCHAR" property="businessDesc"/>
+        <result column="businessAddress" jdbcType="VARCHAR" property="businessAddress"/>
+        <result column="businessPhone" jdbcType="VARCHAR" property="businessPhone"/>
+        <result column="businessName" jdbcType="VARCHAR" property="businessName"/>
+
+    </resultMap>
+
+
+    <resultMap id="productMarketListResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductMarketVo">
+        <result column="sold_stock" jdbcType="INTEGER" property="sale"/>
+        <result column="picThum" jdbcType="VARCHAR" property="picThum"/>
+        <result column="titles" jdbcType="VARCHAR" property="titles"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+
+    </resultMap>
+
+    <resultMap id="productMarketDetailResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductMarketDetailVo"
+               extends="com.ddzb.coppermall.mapper.PmsProductMapper.BaseResultMap">
+
+        <result column="productCategoryParentName" jdbcType="VARCHAR" property="productCategoryParentName"/>
+
+        <result column="businessRegistered" jdbcType="VARCHAR" property="businessRegistered"/>
+        <result column="businessMainBusiness" jdbcType="VARCHAR" property="businessMainBusiness"/>
+        <result column="businessDesc" jdbcType="VARCHAR" property="businessDesc"/>
+        <result column="businessAddress" jdbcType="VARCHAR" property="businessAddress"/>
+        <result column="businessPhone" jdbcType="VARCHAR" property="businessPhone"/>
+        <result column="businessName" jdbcType="VARCHAR" property="businessName"/>
+    </resultMap>
+
+    <resultMap id="productCountResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductCountVo">
+        <result column="totals" jdbcType="INTEGER" property="totals"/>
+        <result column="haveInHand" jdbcType="INTEGER" property="haveInHand"/>
+        <result column="finished" jdbcType="INTEGER" property="finished"/>
+
+    </resultMap>
+
+    <resultMap id="productMyAuctionListResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductMyAuctionVo">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="titles" jdbcType="VARCHAR" property="titles"/>
+        <result column="brand_name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="product_category_name" jdbcType="VARCHAR" property="productCategoryName"/>
+        <result column="dictionary1_name" jdbcType="VARCHAR" property="dictionary1Name"/>
+
+        <result column="diameter" jdbcType="DECIMAL" property="diameter"/>
+        <result column="walls" jdbcType="DECIMAL" property="walls"/>
+        <result column="widths" jdbcType="DECIMAL" property="widths"/>
+        <result column="lengths" jdbcType="DECIMAL" property="lengths"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="stock" jdbcType="INTEGER" property="stock"/>
+
+        <result column="auction_start_time" jdbcType="TIMESTAMP" property="auctionStartTime"/>
+        <result column="auction_end_time" jdbcType="TIMESTAMP" property="auctionEndTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+        <result column="publish_status" jdbcType="INTEGER" property="publishStatus"/>
+
+        <result column="auctionStatus" jdbcType="INTEGER" property="auctionStatus"/>
+        <result column="priceNums" jdbcType="INTEGER" property="priceNums"/>
+
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+
+    </resultMap>
+
+    <resultMap id="productMyMarketListResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductMyMarketVo">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="titles" jdbcType="VARCHAR" property="titles"/>
+        <result column="brand_name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="product_category_name" jdbcType="VARCHAR" property="productCategoryName"/>
+        <result column="dictionary1_name" jdbcType="VARCHAR" property="dictionary1Name"/>
+
+        <result column="diameter" jdbcType="DECIMAL" property="diameter"/>
+        <result column="walls" jdbcType="DECIMAL" property="walls"/>
+        <result column="widths" jdbcType="DECIMAL" property="widths"/>
+        <result column="lengths" jdbcType="DECIMAL" property="lengths"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="stock" jdbcType="INTEGER" property="stock"/>
+
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+        <result column="publish_status" jdbcType="INTEGER" property="publishStatus"/>
+
+        <result column="auctionStatus" jdbcType="INTEGER" property="auctionStatus"/>
+
+        <result column="sold_stock" jdbcType="INTEGER" property="soldStock"/>
+
+    </resultMap>
+
+    <resultMap id="productUpdateDetailResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductUpdateDetailVo"
+               extends="com.ddzb.coppermall.mapper.PmsProductMapper.ResultMapWithBLOBs">
+        <result column="productCategoryParentId" jdbcType="BIGINT" property="productCategoryParentId"/>
+        <result column="productCategoryParentName" jdbcType="VARCHAR" property="productCategoryParentName"/>
+
+    </resultMap>
+
+    <select id="queryAuctionList" resultMap="productAuctionListResultMap">
+        SELECT
+        p1.id,p1.titles,p1.stock,p1.brand_name,p1.dictionary1_name,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.product_category_name,
+        p1.product_category_id,p1.price,p1.user_enterprisename,p1.delivery_pname,p1.delivery_cname,p1.delivery_oname,p1.delivery_address,
+        p1.auction_start_time,p1.auction_end_time,
+        CASE WHEN now() BETWEEN p1.auction_start_time AND p1.auction_end_time AND p1.transaction_status != 2 THEN 1 WHEN now() > p1.auction_end_time OR p1.transaction_status = 2
+        THEN 2 ELSE 0 END AS auctionStatus,
+        p2.money
+        FROM pms_product AS p1 LEFT JOIN pms_product_batch p2 ON p2.product_id = p1.id AND p2.id = (SELECT MAX(p2.id) id
+        FROM pms_product_batch p2 WHERE p2.product_id = p1.id AND p2.`status` = 0)
+        WHERE p1.type = #{param.type} AND p1.delete_status =1 AND p1.publish_status = 1 AND p1.verify_status = 1 AND
+        (p1.transaction_status = 0 OR p1.transaction_status =1)
+        <if test="param.productCategoryId != null and param.productCategoryId != ''">
+            AND p1.product_category_id = #{param.productCategoryId}
+        </if>
+
+        <if test="param.dictionary1Code != null and param.dictionary1Code != ''">
+            AND p1.dictionary1_code = #{param.dictionary1Code}
+        </if>
+
+        <if test="param.deliveryPid != null and param.deliveryPid != ''">
+            AND p1.delivery_pid = #{param.deliveryPid}
+        </if>
+        <if test="param.brandId != null and param.brandId != ''">
+            AND p1.brand_id = #{param.brandId}
+        </if>
+        <if test="param.auctionStatus != null and param.auctionStatus != ''">
+            <choose>
+                <when test="param.auctionStatus == 1">
+                    AND now() BETWEEN p1.auction_start_time AND p1.auction_end_time AND p1.transaction_status != 2
+                </when>
+                <when test="param.auctionStatus == 2">
+                    AND (now() > p1.auction_end_time OR p1.transaction_status = 2)
+                </when>
+            </choose>
+        </if>
+        <if test="param.orderBy != null and param.orderBy != ''">
+            <choose>
+                <when test="param.orderBy == 2">
+                    ORDER BY p1.`price` DESC
+                </when>
+                <otherwise>
+                    ORDER BY p1.id DESC
+                </otherwise>
+            </choose>
+        </if>
+
+    </select>
+
+    <select id="queryDeliveryList" resultMap="deliveryListResultMap">
+        SELECT p1.delivery_pid AS `id`,p1.delivery_pname AS `name`  FROM pms_product AS p1 WHERE p1.type = #{param.type} GROUP BY p1.delivery_pid
+    </select>
+
+    <select id="queryAuctionDetailById" resultMap="productAuctionDetailResultMap">
+        SELECT
+        p0.parent_name productCategoryParentName,p1.id,p1.titles,p1.stock,p1.brand_name,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.product_category_name,
+        p1.product_category_id,p1.price,p1.user_enterprisename,p1.delivery_pname,p1.delivery_cname,p1.delivery_oname,p1.delivery_address,
+        p1.auction_start_time,p1.auction_end_time,
+        p1.product_sn,p1.dictionary1_name,p1.dictionary2_name,p1.dictionary3_name,p1.description,
+        p1.starting_stock,p1.signing_type,p1.deposit,p1.deposit_payment,p1.final_days,p1.final_payment,p1.delivery_days,p1.delivery_start_time,p1.delivery_end_time,
+        p1.invoice,p1.contract_template,p1.pic,p1.pic_thum,
+        p1.detail_html,
+		p2.phone AS businessPhone,concat(p2.pname,p2.cname,p2.cname,p2.address) AS businessAddress,p2.registered AS businessRegistered,p2.main_business AS businessMainBusiness,p2.description AS businessDesc,p2.name AS businessName,
+		CASE WHEN now() BETWEEN p1.auction_start_time AND p1.auction_end_time AND p1.transaction_status != 2 THEN 1 WHEN now() > p1.auction_end_time OR p1.transaction_status = 2
+        THEN 2 ELSE 0 END AS auctionStatus,p1.delivery_type
+        FROM pms_product_category AS p0 INNER JOIN pms_product AS p1 ON p0.id = p1.product_category_id INNER JOIN ums_member_details p2 ON p2.user_id = p1.user_id
+        WHERE p1.id = #{id}
+    </select>
+
+
+    <select id="queryAuctionIndexList" resultMap="productAuctionListResultMap">
+        SELECT
+        p1.id,p1.titles,p1.stock,p1.brand_name,p1.dictionary1_name,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.product_category_name,
+        p1.product_category_id,p1.price,p1.user_enterprisename,p1.delivery_pname,p1.delivery_cname,p1.delivery_oname,p1.delivery_address,
+        p1.auction_start_time,p1.auction_end_time,
+        CASE WHEN now() BETWEEN p1.auction_start_time AND p1.auction_end_time AND p1.transaction_status != 2 THEN 1 WHEN now() > p1.auction_end_time OR p1.transaction_status = 2
+        THEN 2 ELSE 0 END AS auctionStatus
+        FROM pms_product_category p0 INNER JOIN pms_product AS p1 ON p0.id = p1.product_category_id AND p0.`level` = 2
+        WHERE p1.type = #{param.type} AND p1.delete_status =1 AND p1.publish_status = 1 AND p1.verify_status = 1 AND
+        (p1.transaction_status = 0 OR p1.transaction_status =1)
+
+        <if test="param.productCategoryParentId != null and param.productCategoryParentId != ''">
+            AND p0.parent_id = #{param.productCategoryParentId}
+        </if>
+        ORDER BY p1.id DESC
+
+    </select>
+
+    <select id="getMarketIndexList" resultMap="productMarketListResultMap">
+        SELECT
+        p1.id,p1.titles,p1.pic,p1.pic_thum AS picThum,p1.`sold_stock`,p1.price
+        FROM pms_product_category p0 INNER JOIN pms_product AS p1 ON p0.id = p1.product_category_id AND p0.`level` = 2
+        WHERE p1.type = 2 AND p1.delete_status =1 AND p1.publish_status = 1 AND p1.verify_status = 1
+
+        <if test="param.productCategoryParentId != null and param.productCategoryParentId != ''">
+            AND p0.parent_id = #{param.productCategoryParentId}
+        </if>
+        ORDER BY p1.id DESC
+
+    </select>
+
+    <select id="getMarketList" resultMap="productMarketListResultMap">
+        SELECT
+        p1.id,p1.titles,p1.pic,p1.pic_thum AS picThum,p1.`sold_stock`,p1.price
+        FROM pms_product AS p1 WHERE p1.type = 2 AND p1.delete_status =1 AND p1.publish_status = 1 AND p1.verify_status
+        = 1
+        <if test="param.productCategoryId != null and param.productCategoryId != ''">
+            AND p1.product_category_id = #{param.productCategoryId}
+        </if>
+
+        <if test="param.dictionary1Code != null and param.dictionary1Code != ''">
+            AND p1.dictionary1_code = #{param.dictionary1Code}
+        </if>
+
+        <if test="param.deliveryPid != null and param.deliveryPid != ''">
+            AND p1.delivery_pid = #{param.deliveryPid}
+        </if>
+        <if test="param.brandId != null and param.brandId != ''">
+            AND p1.brand_id = #{param.brandId}
+        </if>
+        <if test="param.orderBy != null and param.orderBy != ''">
+            <choose>
+                <when test="param.orderBy == 2">
+                    ORDER BY p1.`price` DESC
+                </when>
+                <otherwise>
+                    ORDER BY p1.id DESC
+                </otherwise>
+            </choose>
+        </if>
+
+    </select>
+
+
+    <select id="queryMarketDetailById" resultMap="productMarketDetailResultMap">
+        SELECT
+        p0.parent_name productCategoryParentName,p1.id,p1.titles,p1.stock,p1.brand_name,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.product_category_name,
+        p1.product_category_id,p1.price,p1.user_enterprisename,p1.delivery_pname,p1.delivery_cname,p1.delivery_oname,p1.delivery_address,
+        p1.auction_start_time,p1.auction_end_time,
+        p1.product_sn,p1.dictionary1_name,p1.dictionary2_name,p1.dictionary3_name,p1.description,
+        p1.starting_stock,p1.signing_type,p1.deposit,p1.deposit_payment,p1.final_days,p1.final_payment,p1.delivery_days,p1.delivery_start_time,p1.delivery_end_time,
+        p1.invoice,p1.contract_template,p1.pic,p1.pic_thum,
+        p1.detail_html,
+		p2.phone AS businessPhone,concat(p2.pname,p2.cname,p2.cname,p2.address) AS businessAddress,p2.registered AS businessRegistered,p2.main_business AS businessMainBusiness,p2.description AS businessDesc,p2.name AS businessName
+        FROM pms_product_category AS p0 INNER JOIN pms_product AS p1 ON p0.id = p1.product_category_id INNER JOIN ums_member_details p2 ON p2.user_id = p1.user_id
+        WHERE p1.id = #{id}
+    </select>
+    <select id="queryProductCount" resultMap="productCountResultMap">
+        SELECT (SELECT COUNT(p1.id) FROM pms_product p1 WHERE p1.user_id = #{userId} AND p1.`publish_status` = 1 AND p1.transaction_status != -1 AND (p1.type = 1 OR p1.type = 2)) totals,
+        (SELECT COUNT(p.id) FROM pms_product p WHERE p.user_id = #{userId} AND p.`publish_status` = 1 AND p.transaction_status = 0 AND (NOW() BETWEEN p.auction_start_time AND p.auction_end_time AND p.type = 1) OR p.type = 2) haveInHand,
+        (SELECT COUNT(p2.id) FROM pms_product p2 WHERE p2.user_id = #{userId} AND p2.`publish_status` = 1 AND (p2.transaction_status = 2 OR NOW() > p2.auction_end_time) AND p2.type = 1) finished
+    </select>
+
+    <select id="queryProductCount2" resultMap="productCountResultMap">
+        SELECT (SELECT COUNT(p.id) FROM pms_product p WHERE p.user_id = #{userId} AND p.publish_status = 1 AND p.transaction_status != -1 AND p.type = 3) totals,
+        (SELECT COUNT(p.id) FROM pms_product p WHERE p.user_id = #{userId} AND p.publish_status = 1 AND p.transaction_status = 0 AND NOW() BETWEEN p.auction_start_time AND p.auction_end_time AND p.type = 3) haveInHand,
+        (SELECT COUNT(p.id) FROM pms_product p WHERE p.user_id = #{userId} AND p.publish_status = 1 AND p.transaction_status = 2 OR NOW() > p.auction_end_time AND p.type = 3) finished
+    </select>
+
+
+    <select id="queryMyAuctionList" resultMap="productMyAuctionListResultMap">
+        SELECT
+        p1.id,p1.titles,p1.stock,p1.brand_name,p1.dictionary1_name,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.product_category_name,
+        p1.price,
+        p1.auction_start_time,p1.auction_end_time,p1.create_time,p1.publish_status,
+        CASE WHEN now() BETWEEN p1.auction_start_time AND p1.auction_end_time AND p1.transaction_status != 2 THEN 1 WHEN now() > p1.auction_end_time OR p1.transaction_status = 2
+        THEN 2 ELSE 0 END AS auctionStatus,
+        p2.money,
+        (SELECT COUNT(p3.id) FROM pms_product_batch p3 WHERE p3.product_id = p1.id AND p3.`status` != 2) priceNums
+        FROM pms_product AS p1 LEFT JOIN pms_product_batch p2 ON p2.product_id = p1.id AND p2.id = (SELECT MAX(p2.id) id
+        FROM pms_product_batch p2 WHERE p2.product_id = p1.id AND p2.`status` = 0)
+        WHERE p1.type = #{param.type} AND p1.delete_status =1 AND p1.verify_status = 1 AND p1.transaction_status != -1
+        AND p1.user_id = #{param.userId}
+
+        <if test="param.productCategoryId != null and param.productCategoryId != ''">
+            AND p1.product_category_id = #{param.productCategoryId}
+        </if>
+
+        <if test="param.dictionary1Code != null and param.dictionary1Code != ''">
+            AND p1.dictionary1_code = #{param.dictionary1Code}
+        </if>
+
+        <if test="param.brandId != null and param.brandId != ''">
+            AND p1.brand_id = #{param.brandId}
+        </if>
+        <if test="param.auctionStatus != null and param.auctionStatus != ''">
+            <choose>
+                <when test="param.auctionStatus == 2">
+                    AND now() BETWEEN p1.auction_start_time AND p1.auction_end_time AND p1.transaction_status != 2
+                </when>
+                <when test="param.auctionStatus == 3">
+                    AND (now() > p1.auction_end_time OR p1.transaction_status = 2)
+                </when>
+                <otherwise>
+                    AND p1.auction_start_time > now()
+                </otherwise>
+            </choose>
+        </if>
+        <if test="param.startTime != null and param.startTime != ''">
+            AND p1.create_time > #{param.startTime}
+        </if>
+        <if test="param.endTime != null and param.endTime != ''">
+            AND #{param.endTime} > p1.create_time
+        </if>
+        <if test="param.titles != null and param.titles != ''">
+            AND p1.titles LIKE CONCAT("%",#{param.titles},"%")
+        </if>
+    </select>
+
+    <select id="queryMyMarketList" resultMap="productMyMarketListResultMap">
+        SELECT
+        p1.id,p1.titles,p1.stock,p1.brand_name,p1.dictionary1_name,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.product_category_name,
+        p1.price,
+        p1.auction_start_time,p1.auction_end_time,p1.create_time,p1.publish_status,p1.sold_stock,
+        CASE WHEN p1.stock > 0 THEN 1 ELSE 2 END AS auctionStatus
+        FROM pms_product AS p1
+        WHERE p1.type = 2 AND p1.delete_status =1 AND p1.verify_status = 1 AND p1.transaction_status = 0 AND p1.user_id
+        = #{param.userId}
+
+        <if test="param.productCategoryId != null and param.productCategoryId != ''">
+            AND p1.product_category_id = #{param.productCategoryId}
+        </if>
+
+        <if test="param.dictionary1Code != null and param.dictionary1Code != ''">
+            AND p1.dictionary1_code = #{param.dictionary1Code}
+        </if>
+
+        <if test="param.brandId != null and param.brandId != ''">
+            AND p1.brand_id = #{param.brandId}
+        </if>
+        <if test="param.auctionStatus != null and param.auctionStatus != ''">
+            <choose>
+                <when test="param.auctionStatus == 1">
+                    AND p1.stock > 0
+                </when>
+                <when test="param.auctionStatus == 2">
+                    AND 0 >= p1.stock
+                </when>
+            </choose>
+        </if>
+        <if test="param.startTime != null and param.startTime != ''">
+            AND p1.create_time > #{param.startTime}
+        </if>
+        <if test="param.endTime != null and param.endTime != ''">
+            AND #{param.endTime} > p1.create_time
+        </if>
+        <if test="param.titles != null and param.titles != ''">
+            AND p1.titles LIKE CONCAT("%",#{param.titles},"%")
+        </if>
+    </select>
+
+    <select id="queryUpdateDetailById" resultMap="productUpdateDetailResultMap">
+        SELECT p1.id,p1.brand_id,p1.product_category_id,p1.brand_name,p1.product_category_name,p1.titles,p1.pic_thum,p1.pic,p1.dictionary1_code,p1.dictionary1_name,p1.dictionary2_code,p1.dictionary2_name,p1.dictionary3_code,p1.dictionary3_name,p1.price,p1.description,p1.stock,p1.starting_stock,p1.delivery_address,p1.delivery_pid,p1.delivery_cid,p1.delivery_oid,p1.delivery_pname,p1.delivery_cname,p1.delivery_oname,p1.delivery_type,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.signing_type,p1.deposit,p1.deposit_payment,p1.final_days,p1.final_payment,p1.delivery_days,p1.delivery_start_time,p1.delivery_end_time,p1.invoice,p1.contract_template,p1.detail_html,p1.type,p1.auction_start_time,p1.auction_end_time,p1.sold_stock,p1.publish_status,p0.parent_name productCategoryParentName,p0.parent_id productCategoryParentId
+        FROM pms_product p1  INNER JOIN pms_product_category AS p0 ON p0.id = p1.product_category_id WHERE p1.id = #{id}
+    </select>
+
+
+</mapper>

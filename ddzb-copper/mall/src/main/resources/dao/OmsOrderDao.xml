@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddzb.coppermall.portal.dao.OmsOrderDao">
+    <resultMap id="orderIndexListResultMap" type="com.ddzb.coppermall.portal.vo.OmsOrderIndexVo">
+        <result column="productCategoryName" jdbcType="VARCHAR" property="productCategoryName"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="brandName" jdbcType="VARCHAR" property="brandName"/>
+        <result column="userPhone" jdbcType="VARCHAR" property="userPhone"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="numbers" jdbcType="DECIMAL" property="numbers"/>
+
+    </resultMap>
+
+    <resultMap id="orderCountsResultMap" type="com.ddzb.coppermall.portal.vo.OmsOrderCountVo">
+        <result column="signing1" jdbcType="INTEGER" property="signing1"/>
+        <result column="signing2" jdbcType="INTEGER" property="signing2"/>
+        <result column="signing3" jdbcType="INTEGER" property="signing3"/>
+        <result column="signing4" jdbcType="INTEGER" property="signing4"/>
+        <result column="signing5" jdbcType="INTEGER" property="signing5"/>
+        <result column="signing6" jdbcType="INTEGER" property="signing6"/>
+
+
+    </resultMap>
+
+    <resultMap id="orderListResultMap" type="com.ddzb.coppermall.portal.vo.OmsOrderMyVo">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+
+        <result column="user_phone" jdbcType="VARCHAR" property="userPhone"/>
+        <result column="user_enterprisename" jdbcType="VARCHAR" property="userEnterprisename"/>
+        <result column="userEnterprisename2" jdbcType="VARCHAR" property="userEnterprisename2"/>
+
+
+        <result column="osn" jdbcType="VARCHAR" property="osn"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="numbers" jdbcType="DECIMAL" property="numbers"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="titles" jdbcType="VARCHAR" property="titles"/>
+        <result column="pic_thum" jdbcType="VARCHAR" property="picThum"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+        <result column="diameter" jdbcType="DECIMAL" property="diameter"/>
+        <result column="walls" jdbcType="DECIMAL" property="walls"/>
+        <result column="widths" jdbcType="DECIMAL" property="widths"/>
+        <result column="lengths" jdbcType="DECIMAL" property="lengths"/>
+
+        <result column="brand_name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="product_category_name" jdbcType="VARCHAR" property="productCategoryName"/>
+        <result column="dictionary1_name" jdbcType="VARCHAR" property="dictionary1Name"/>
+        <result column="contract_url" jdbcType="VARCHAR" property="contractUrl"/>
+        <result column="deposit_payment" jdbcType="INTEGER" property="depositPayment"/>
+        <result column="deposit" jdbcType="INTEGER" property="deposit"/>
+
+        <result column="delivery_date" jdbcType="TIMESTAMP" property="deliveryDate"/>
+        <result column="delivery_img" jdbcType="VARCHAR" property="deliveryImg"/>
+        <result column="invoice_img" jdbcType="VARCHAR" property="invoiceImg"/>
+
+        <result column="final_price" jdbcType="DECIMAL" property="finalPrice" />
+        <result column="final_numbers" jdbcType="DECIMAL" property="finalNumbers" />
+        <result column="final_deposit" jdbcType="DECIMAL" property="finalDeposit" />
+        <result column="final_img" jdbcType="VARCHAR" property="finalImg" />
+        <result column="final_note" jdbcType="VARCHAR" property="finalNote" />
+
+
+    </resultMap>
+
+    <resultMap id="orderDetailResultMap" type="com.ddzb.coppermall.portal.vo.OmsOrderDetailVo"
+               extends="com.ddzb.coppermall.mapper.OmsOrderMapper.BaseResultMap">
+
+        <result column="titles" jdbcType="VARCHAR" property="titles"/>
+        <result column="pic_thum" jdbcType="VARCHAR" property="picThum"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+
+        <result column="diameter" jdbcType="DECIMAL" property="diameter"/>
+        <result column="walls" jdbcType="DECIMAL" property="walls"/>
+        <result column="widths" jdbcType="DECIMAL" property="widths"/>
+        <result column="lengths" jdbcType="DECIMAL" property="lengths"/>
+
+        <result column="brand_name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="product_category_name" jdbcType="VARCHAR" property="productCategoryName"/>
+        <result column="dictionary1_name" jdbcType="VARCHAR" property="dictionary1Name"/>
+
+        <result column="delivery_type" jdbcType="INTEGER" property="deliveryType"/>
+        <result column="signing_type" jdbcType="INTEGER" property="signingType"/>
+        <result column="deposit" jdbcType="INTEGER" property="deposit"/>
+        <result column="deposit_payment" jdbcType="INTEGER" property="depositPayment"/>
+        <result column="final_days" jdbcType="INTEGER" property="finalDays"/>
+        <result column="final_payment" jdbcType="INTEGER" property="finalPayment"/>
+        <result column="delivery_days" jdbcType="INTEGER" property="deliveryDays"/>
+        <result column="delivery_start_time" jdbcType="TIMESTAMP" property="deliveryStartTime"/>
+        <result column="delivery_end_time" jdbcType="TIMESTAMP" property="deliveryEndTime"/>
+
+        <result column="userEnterprisename2" jdbcType="VARCHAR" property="userEnterprisename2"/>
+
+
+    </resultMap>
+
+    <select id="queryOrderIndexList" resultMap="orderIndexListResultMap">
+        SELECT p1.id,p1.`money` ,p1.`create_time`FROM pms_product_batch AS p1 WHERE p1.product_id = #{productId} AND (p1.`status` = 1 or p1.`status` = 0)
+
+        ORDER BY o1.id DESC
+
+    </select>
+
+    <select id="queryOrderCount" resultMap="orderCountsResultMap">
+        SELECT (SELECT COUNT(o.id) FROM oms_order o WHERE  o.user_id = #{id} AND o.`status`= 1) signing1,
+        (SELECT COUNT(o.id) FROM oms_order o WHERE  o.user_id = #{id} AND o.`status`= 2) signing2,
+        (SELECT COUNT(o.id) FROM oms_order o WHERE  o.user_id = #{id} AND o.`status`= 3) signing3,
+        (SELECT COUNT(o.id) FROM oms_order o WHERE  o.user_id = #{id} AND o.`status`= 4) signing4,
+        (SELECT COUNT(o.id) FROM oms_order o WHERE  o.user_id = #{id} AND o.`status`= 5) signing5,
+        (SELECT COUNT(o.id) FROM oms_order o WHERE  o.user_id = #{id} AND o.`status`= 6) signing6
+    </select>
+
+    <select id="queryOrderCount2" resultMap="orderCountsResultMap">
+       SELECT (SELECT COUNT(o.id) FROM oms_order o INNER JOIN pms_product p ON p.id = o.product_id AND p.user_id = #{id} WHERE o.`status`= 1) signing1,
+        (SELECT COUNT(o.id) FROM oms_order o INNER JOIN pms_product p ON p.id = o.product_id AND p.user_id = #{id} WHERE o.`status`= 2) signing2,
+        (SELECT COUNT(o.id) FROM oms_order o INNER JOIN pms_product p ON p.id = o.product_id AND p.user_id = #{id} WHERE o.`status`= 3) signing3,
+        (SELECT COUNT(o.id) FROM oms_order o INNER JOIN pms_product p ON p.id = o.product_id AND p.user_id = #{id} WHERE o.`status`= 4) signing4,
+        (SELECT COUNT(o.id) FROM oms_order o INNER JOIN pms_product p ON p.id = o.product_id AND p.user_id = #{id} WHERE o.`status`= 5) signing5,
+        (SELECT COUNT(o.id) FROM oms_order o INNER JOIN pms_product p ON p.id = o.product_id AND p.user_id = #{id} WHERE o.`status`= 6) signing6
+    </select>
+
+
+    <select id="queryMyOrderList" resultMap="orderListResultMap">
+        SELECT
+        o1.id,o1.user_phone,o1.user_enterprisename,o1.osn,o1.numbers,o1.create_time,o1.`status`,o1.price,p1.titles,p1.pic_thum,p1.pic,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.brand_name,p1.product_category_name,p1.dictionary1_name,o1.contract_url,o1.delivery_date,o1.delivery_img,o1.invoice_img,o1.final_price,o1.final_numbers,o1.final_deposit,o1.final_img,o1.final_note
+        <choose>
+            <when test="param.type == 3">
+                ,o1.user_phone,o1.user_enterprisename,p1.user_enterprisename AS userEnterprisename2
+            </when>
+            <otherwise>
+                ,p1.user_phone,p1.user_enterprisename,o1.user_enterprisename AS userEnterprisename2
+            </otherwise>
+        </choose>
+        ,p1.deposit,p1.deposit_payment
+
+        FROM
+        oms_order AS o1
+        INNER JOIN pms_product AS p1 ON o1.product_id = p1.id
+        WHERE o1.type = #{param.type}
+        <choose>
+            <when test="param.type == 3">
+                AND o1.user_id = #{param.userId}
+            </when>
+            <otherwise>
+                AND p1.user_id = #{param.userId}
+            </otherwise>
+        </choose>
+
+
+        <if test="param.productCategoryId != null and param.productCategoryId != ''">
+            AND p1.product_category_id = #{param.productCategoryId}
+        </if>
+
+        <if test="param.dictionary1Code != null and param.dictionary1Code != ''">
+            AND p1.dictionary1_code = #{param.dictionary1Code}
+        </if>
+        <if test="param.brandId != null and param.brandId != ''">
+            AND p1.brand_id = #{param.brandId}
+        </if>
+        <if test="param.status != null and param.status != ''">
+            AND o1.`status` = #{param.status}
+        </if>
+        <if test="param.titles != null and param.titles != ''">
+            AND p1.titles LIKE CONCAT("%",#{param.titles},"%")
+        </if>
+        <if test="param.userEnterprisename != null and param.userEnterprisename != ''">
+            AND o1.user_enterprisename LIKE CONCAT("%",#{param.userEnterprisename},"%")
+        </if>
+        <if test="param.startTime != null and param.startTime != ''">
+            AND o1.create_time > #{param.startTime}
+        </if>
+        <if test="param.endTime != null and param.endTime != ''">
+            AND #{param.endTime} > o1.create_time
+        </if>
+    </select>
+
+    <select id="queryMyOrderList2" resultMap="orderListResultMap">
+        SELECT
+        o1.id,o1.osn,o1.numbers,o1.create_time,o1.`status`,o1.price,p1.titles,p1.pic_thum,p1.pic,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.brand_name,p1.product_category_name,p1.dictionary1_name,o1.contract_url,o1.delivery_date,o1.delivery_img,o1.invoice_img,o1.final_price,o1.final_numbers,o1.final_deposit,o1.final_img,o1.final_note
+
+        <choose>
+            <when test="param.type == 3">
+                ,p1.user_phone,p1.user_enterprisename,o1.user_enterprisename AS userEnterprisename2
+            </when>
+            <otherwise>
+                ,o1.user_phone,o1.user_enterprisename,p1.user_enterprisename AS userEnterprisename2
+            </otherwise>
+        </choose>
+        ,p1.deposit,p1.deposit_payment
+
+        FROM
+        oms_order AS o1
+        INNER JOIN pms_product AS p1 ON o1.product_id = p1.id
+        WHERE o1.type = #{param.type}
+        <choose>
+            <when test="param.type == 3">
+                AND p1.user_id = #{param.userId}
+            </when>
+            <otherwise>
+                AND o1.user_id = #{param.userId}
+            </otherwise>
+        </choose>
+
+
+        <if test="param.productCategoryId != null and param.productCategoryId != ''">
+            AND p1.product_category_id = #{param.productCategoryId}
+        </if>
+
+        <if test="param.dictionary1Code != null and param.dictionary1Code != ''">
+            AND p1.dictionary1_code = #{param.dictionary1Code}
+        </if>
+        <if test="param.brandId != null and param.brandId != ''">
+            AND p1.brand_id = #{param.brandId}
+        </if>
+        <if test="param.status != null and param.status != ''">
+            AND o1.`status` = #{param.status}
+        </if>
+        <if test="param.titles != null and param.titles != ''">
+            AND p1.titles LIKE CONCAT("%",#{param.titles},"%")
+        </if>
+        <if test="param.userEnterprisename != null and param.userEnterprisename != ''">
+            AND p1.user_enterprisename LIKE CONCAT("%",#{param.userEnterprisename},"%")
+        </if>
+        <if test="param.startTime != null and param.startTime != ''">
+            AND o1.create_time > #{param.startTime}
+        </if>
+        <if test="param.endTime != null and param.endTime != ''">
+            AND #{param.endTime} > o1.create_time
+        </if>
+    </select>
+
+    <select id="queryOrderDetailById" resultMap="orderDetailResultMap">
+        SELECT
+        o1.id,o1.osn,o1.numbers,o1.create_time,o1.`status`,o1.price,p1.titles,p1.diameter,p1.walls,p1.widths,p1.lengths,p1.brand_name,p1.product_category_name,p1.dictionary1_name
+        ,p1.delivery_type,p1.signing_type,p1.deposit,p1.deposit_payment,p1.final_days,p1.final_payment,p1.delivery_days,p1.delivery_start_time,p1.delivery_end_time,
+        o1.balance_update_time,o1.final_confirm_update_time,o1.final_update_time,o1.delivery_update_time,o1.deposit_update_time,o1.product_id,
+        o1.contract_time,o1.contract_url,o1.delivery_date,o1.delivery_img,o1.deposit_down,o1.deposit_img,o1.invoice_img,o1.final_price,o1.final_numbers,o1.final_deposit,o1.final_img,o1.final_note,o1.balance_amount,o1.balance_img,o1.balance_payment,
+        <choose>
+            <when test="param.type2 == 1">
+                <choose>
+                    <when test="param.type == 3">
+                        o1.user_phone,o1.user_enterprisename,p1.user_enterprisename AS userEnterprisename2
+                    </when>
+                    <otherwise>
+                        p1.user_phone,p1.user_enterprisename,o1.user_enterprisename AS userEnterprisename2
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="param.type == 3">
+                        p1.user_phone,p1.user_enterprisename,o1.user_enterprisename AS userEnterprisename2
+                    </when>
+                    <otherwise>
+                        o1.user_phone,o1.user_enterprisename,p1.user_enterprisename AS userEnterprisename2
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
+
+        FROM
+        oms_order AS o1
+        INNER JOIN pms_product AS p1 ON o1.product_id = p1.id
+        WHERE o1.id = #{param.id}
+    </select>
+
+</mapper>

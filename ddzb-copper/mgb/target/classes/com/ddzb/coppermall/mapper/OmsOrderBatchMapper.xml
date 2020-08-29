@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddzb.coppermall.mapper.OmsOrderBatchMapper">
+  <resultMap id="BaseResultMap" type="com.ddzb.coppermall.model.OmsOrderBatch">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="batch_no" jdbcType="INTEGER" property="batchNo" />
+    <result column="apply_money" jdbcType="DECIMAL" property="applyMoney" />
+    <result column="apply_numbers" jdbcType="DECIMAL" property="applyNumbers" />
+    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="apply_pname" jdbcType="VARCHAR" property="applyPname" />
+    <result column="appply_cname" jdbcType="VARCHAR" property="appplyCname" />
+    <result column="appply_oname" jdbcType="VARCHAR" property="appplyOname" />
+    <result column="appply_address" jdbcType="VARCHAR" property="appplyAddress" />
+    <result column="real_numbers" jdbcType="DECIMAL" property="realNumbers" />
+    <result column="real_backs" jdbcType="DECIMAL" property="realBacks" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="images" jdbcType="VARCHAR" property="images" />
+    <result column="images2" jdbcType="VARCHAR" property="images2" />
+    <result column="images3" jdbcType="VARCHAR" property="images3" />
+    <result column="stauts" jdbcType="INTEGER" property="stauts" />
+    <result column="is_last" jdbcType="INTEGER" property="isLast" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="payment_margin" jdbcType="VARCHAR" property="paymentMargin" />
+    <result column="deposit_amount" jdbcType="DOUBLE" property="depositAmount" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_id, batch_no, apply_money, apply_numbers, apply_time, apply_pname, appply_cname, 
+    appply_oname, appply_address, real_numbers, real_backs, note, images, images2, images3, 
+    stauts, is_last, modify_time, payment_margin, deposit_amount
+  </sql>
+  <select id="selectByExample" parameterType="com.ddzb.coppermall.model.OmsOrderBatchExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oms_order_batch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order_batch
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from oms_order_batch
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ddzb.coppermall.model.OmsOrderBatchExample">
+    delete from oms_order_batch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ddzb.coppermall.model.OmsOrderBatch">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oms_order_batch (order_id, batch_no, apply_money, 
+      apply_numbers, apply_time, apply_pname, 
+      appply_cname, appply_oname, appply_address, 
+      real_numbers, real_backs, note, 
+      images, images2, images3, 
+      stauts, is_last, modify_time, 
+      payment_margin, deposit_amount)
+    values (#{orderId,jdbcType=BIGINT}, #{batchNo,jdbcType=INTEGER}, #{applyMoney,jdbcType=DECIMAL}, 
+      #{applyNumbers,jdbcType=DECIMAL}, #{applyTime,jdbcType=TIMESTAMP}, #{applyPname,jdbcType=VARCHAR}, 
+      #{appplyCname,jdbcType=VARCHAR}, #{appplyOname,jdbcType=VARCHAR}, #{appplyAddress,jdbcType=VARCHAR}, 
+      #{realNumbers,jdbcType=DECIMAL}, #{realBacks,jdbcType=DECIMAL}, #{note,jdbcType=VARCHAR}, 
+      #{images,jdbcType=VARCHAR}, #{images2,jdbcType=VARCHAR}, #{images3,jdbcType=VARCHAR}, 
+      #{stauts,jdbcType=INTEGER}, #{isLast,jdbcType=INTEGER}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{paymentMargin,jdbcType=VARCHAR}, #{depositAmount,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ddzb.coppermall.model.OmsOrderBatch">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oms_order_batch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="batchNo != null">
+        batch_no,
+      </if>
+      <if test="applyMoney != null">
+        apply_money,
+      </if>
+      <if test="applyNumbers != null">
+        apply_numbers,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="applyPname != null">
+        apply_pname,
+      </if>
+      <if test="appplyCname != null">
+        appply_cname,
+      </if>
+      <if test="appplyOname != null">
+        appply_oname,
+      </if>
+      <if test="appplyAddress != null">
+        appply_address,
+      </if>
+      <if test="realNumbers != null">
+        real_numbers,
+      </if>
+      <if test="realBacks != null">
+        real_backs,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="images != null">
+        images,
+      </if>
+      <if test="images2 != null">
+        images2,
+      </if>
+      <if test="images3 != null">
+        images3,
+      </if>
+      <if test="stauts != null">
+        stauts,
+      </if>
+      <if test="isLast != null">
+        is_last,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="paymentMargin != null">
+        payment_margin,
+      </if>
+      <if test="depositAmount != null">
+        deposit_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=INTEGER},
+      </if>
+      <if test="applyMoney != null">
+        #{applyMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="applyNumbers != null">
+        #{applyNumbers,jdbcType=DECIMAL},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyPname != null">
+        #{applyPname,jdbcType=VARCHAR},
+      </if>
+      <if test="appplyCname != null">
+        #{appplyCname,jdbcType=VARCHAR},
+      </if>
+      <if test="appplyOname != null">
+        #{appplyOname,jdbcType=VARCHAR},
+      </if>
+      <if test="appplyAddress != null">
+        #{appplyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="realNumbers != null">
+        #{realNumbers,jdbcType=DECIMAL},
+      </if>
+      <if test="realBacks != null">
+        #{realBacks,jdbcType=DECIMAL},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null">
+        #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="images2 != null">
+        #{images2,jdbcType=VARCHAR},
+      </if>
+      <if test="images3 != null">
+        #{images3,jdbcType=VARCHAR},
+      </if>
+      <if test="stauts != null">
+        #{stauts,jdbcType=INTEGER},
+      </if>
+      <if test="isLast != null">
+        #{isLast,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentMargin != null">
+        #{paymentMargin,jdbcType=VARCHAR},
+      </if>
+      <if test="depositAmount != null">
+        #{depositAmount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ddzb.coppermall.model.OmsOrderBatchExample" resultType="java.lang.Long">
+    select count(*) from oms_order_batch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update oms_order_batch
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchNo != null">
+        batch_no = #{record.batchNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyMoney != null">
+        apply_money = #{record.applyMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.applyNumbers != null">
+        apply_numbers = #{record.applyNumbers,jdbcType=DECIMAL},
+      </if>
+      <if test="record.applyTime != null">
+        apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applyPname != null">
+        apply_pname = #{record.applyPname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appplyCname != null">
+        appply_cname = #{record.appplyCname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appplyOname != null">
+        appply_oname = #{record.appplyOname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appplyAddress != null">
+        appply_address = #{record.appplyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realNumbers != null">
+        real_numbers = #{record.realNumbers,jdbcType=DECIMAL},
+      </if>
+      <if test="record.realBacks != null">
+        real_backs = #{record.realBacks,jdbcType=DECIMAL},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.images != null">
+        images = #{record.images,jdbcType=VARCHAR},
+      </if>
+      <if test="record.images2 != null">
+        images2 = #{record.images2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.images3 != null">
+        images3 = #{record.images3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stauts != null">
+        stauts = #{record.stauts,jdbcType=INTEGER},
+      </if>
+      <if test="record.isLast != null">
+        is_last = #{record.isLast,jdbcType=INTEGER},
+      </if>
+      <if test="record.modifyTime != null">
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paymentMargin != null">
+        payment_margin = #{record.paymentMargin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depositAmount != null">
+        deposit_amount = #{record.depositAmount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update oms_order_batch
+    set id = #{record.id,jdbcType=BIGINT},
+      order_id = #{record.orderId,jdbcType=BIGINT},
+      batch_no = #{record.batchNo,jdbcType=INTEGER},
+      apply_money = #{record.applyMoney,jdbcType=DECIMAL},
+      apply_numbers = #{record.applyNumbers,jdbcType=DECIMAL},
+      apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      apply_pname = #{record.applyPname,jdbcType=VARCHAR},
+      appply_cname = #{record.appplyCname,jdbcType=VARCHAR},
+      appply_oname = #{record.appplyOname,jdbcType=VARCHAR},
+      appply_address = #{record.appplyAddress,jdbcType=VARCHAR},
+      real_numbers = #{record.realNumbers,jdbcType=DECIMAL},
+      real_backs = #{record.realBacks,jdbcType=DECIMAL},
+      note = #{record.note,jdbcType=VARCHAR},
+      images = #{record.images,jdbcType=VARCHAR},
+      images2 = #{record.images2,jdbcType=VARCHAR},
+      images3 = #{record.images3,jdbcType=VARCHAR},
+      stauts = #{record.stauts,jdbcType=INTEGER},
+      is_last = #{record.isLast,jdbcType=INTEGER},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      payment_margin = #{record.paymentMargin,jdbcType=VARCHAR},
+      deposit_amount = #{record.depositAmount,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ddzb.coppermall.model.OmsOrderBatch">
+    update oms_order_batch
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="batchNo != null">
+        batch_no = #{batchNo,jdbcType=INTEGER},
+      </if>
+      <if test="applyMoney != null">
+        apply_money = #{applyMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="applyNumbers != null">
+        apply_numbers = #{applyNumbers,jdbcType=DECIMAL},
+      </if>
+      <if test="applyTime != null">
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyPname != null">
+        apply_pname = #{applyPname,jdbcType=VARCHAR},
+      </if>
+      <if test="appplyCname != null">
+        appply_cname = #{appplyCname,jdbcType=VARCHAR},
+      </if>
+      <if test="appplyOname != null">
+        appply_oname = #{appplyOname,jdbcType=VARCHAR},
+      </if>
+      <if test="appplyAddress != null">
+        appply_address = #{appplyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="realNumbers != null">
+        real_numbers = #{realNumbers,jdbcType=DECIMAL},
+      </if>
+      <if test="realBacks != null">
+        real_backs = #{realBacks,jdbcType=DECIMAL},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null">
+        images = #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="images2 != null">
+        images2 = #{images2,jdbcType=VARCHAR},
+      </if>
+      <if test="images3 != null">
+        images3 = #{images3,jdbcType=VARCHAR},
+      </if>
+      <if test="stauts != null">
+        stauts = #{stauts,jdbcType=INTEGER},
+      </if>
+      <if test="isLast != null">
+        is_last = #{isLast,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentMargin != null">
+        payment_margin = #{paymentMargin,jdbcType=VARCHAR},
+      </if>
+      <if test="depositAmount != null">
+        deposit_amount = #{depositAmount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ddzb.coppermall.model.OmsOrderBatch">
+    update oms_order_batch
+    set order_id = #{orderId,jdbcType=BIGINT},
+      batch_no = #{batchNo,jdbcType=INTEGER},
+      apply_money = #{applyMoney,jdbcType=DECIMAL},
+      apply_numbers = #{applyNumbers,jdbcType=DECIMAL},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      apply_pname = #{applyPname,jdbcType=VARCHAR},
+      appply_cname = #{appplyCname,jdbcType=VARCHAR},
+      appply_oname = #{appplyOname,jdbcType=VARCHAR},
+      appply_address = #{appplyAddress,jdbcType=VARCHAR},
+      real_numbers = #{realNumbers,jdbcType=DECIMAL},
+      real_backs = #{realBacks,jdbcType=DECIMAL},
+      note = #{note,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR},
+      images2 = #{images2,jdbcType=VARCHAR},
+      images3 = #{images3,jdbcType=VARCHAR},
+      stauts = #{stauts,jdbcType=INTEGER},
+      is_last = #{isLast,jdbcType=INTEGER},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      payment_margin = #{paymentMargin,jdbcType=VARCHAR},
+      deposit_amount = #{depositAmount,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

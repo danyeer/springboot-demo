@@ -1,0 +1,4 @@
+com\ddzb\coppermall\common\api\ResultCode.class
+com\ddzb\coppermall\common\api\CommonResult.class
+com\ddzb\coppermall\common\api\IErrorCode.class
+com\ddzb\coppermall\common\api\CommonPage.class

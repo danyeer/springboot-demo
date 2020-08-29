@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddzb.coppermall.portal.dao.UmsMemberDao">
+    <resultMap id="umsMemberDetailsResultMap" type="com.ddzb.coppermall.portal.vo.UmsMemberDetailsVo"
+               extends="com.ddzb.coppermall.mapper.UmsMemberDetailsMapper.BaseResultMap">
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="userPhone" jdbcType="VARCHAR" property="userPhone"/>
+        <result column="userCardno" jdbcType="VARCHAR" property="userCardno"/>
+    </resultMap>
+
+
+    <select id="selectUserInfo" resultMap="umsMemberDetailsResultMap">
+        SELECT
+            s1.nickname,s1.`phone` AS userPhone,s1.`cardno` AS userCardno,s2.`name`,s2.`cardcode`,s2.`creditcode`,s2.`enterprisename`,s2.`enterpriselicense`,s2.main_business,s2.`phone`,
+            s2.`address`,s2.pname,s2.cname,s2.oname, s2.`province`,s2.`city`,s2.`county`
+        FROM ums_member s1 INNER JOIN ums_member_details s2 ON s1.id = s2.user_id WHERE s1.id = #{id}
+    </select>
+
+
+
+
+
+</mapper>

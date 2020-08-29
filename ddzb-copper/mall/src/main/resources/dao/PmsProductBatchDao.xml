@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddzb.coppermall.portal.dao.PmsProductBatchDao">
+    <resultMap id="productAuctionBatchListResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductAuctionBatchVo"
+               extends="com.ddzb.coppermall.mapper.PmsProductBatchMapper.BaseResultMap">
+
+        <result column="isMax" jdbcType="INTEGER" property="isMax"/>
+    </resultMap>
+
+    <resultMap id="batchIndexListResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductBatchIndexVo">
+        <result column="productCategoryName" jdbcType="VARCHAR" property="productCategoryName"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="money" jdbcType="DECIMAL" property="price"/>
+        <result column="brandName" jdbcType="VARCHAR" property="brandName"/>
+        <result column="userPhone" jdbcType="VARCHAR" property="userPhone"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="numbers" jdbcType="DECIMAL" property="numbers"/>
+
+    </resultMap>
+
+    <resultMap id="productBatchListResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductBatchVo"
+               extends="com.ddzb.coppermall.mapper.PmsProductBatchMapper.BaseResultMap">
+
+        <result column="isMax" jdbcType="INTEGER" property="isMax"/>
+        <result column="signing_type" jdbcType="INTEGER" property="signingType"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="productStatus" jdbcType="INTEGER" property="productStatus"/>
+
+
+    </resultMap>
+
+    <resultMap id="productMyPriceByUserIdResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductBatchMyVo"
+               extends="com.ddzb.coppermall.mapper.PmsProductBatchMapper.BaseResultMap">
+
+        <result column="titles" jdbcType="VARCHAR" property="titles"/>
+        <result column="brand_name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="product_category_name" jdbcType="VARCHAR" property="productCategoryName"/>
+        <result column="dictionary1_name" jdbcType="VARCHAR" property="dictionary1Name"/>
+
+        <result column="diameter" jdbcType="DECIMAL" property="diameter"/>
+        <result column="walls" jdbcType="DECIMAL" property="walls"/>
+        <result column="widths" jdbcType="DECIMAL" property="widths"/>
+        <result column="lengths" jdbcType="DECIMAL" property="lengths"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+
+        <result column="auction_start_time" jdbcType="TIMESTAMP" property="auctionStartTime"/>
+        <result column="auction_end_time" jdbcType="TIMESTAMP" property="auctionEndTime"/>
+
+        <result column="isMax" jdbcType="INTEGER" property="isMax"/>
+        <result column="money2" jdbcType="DECIMAL" property="money2"/>
+        <result column="productStatus" jdbcType="INTEGER" property="productStatus"/>
+
+        <result column="signing_type" jdbcType="INTEGER" property="signingType"/>
+
+    </resultMap>
+
+    <resultMap id="productMyMymarketPriceByUserIdResultMap" type="com.ddzb.coppermall.portal.vo.PmsProductBatchMyMarketVo"
+               extends="com.ddzb.coppermall.mapper.PmsProductBatchMapper.BaseResultMap">
+
+        <result column="titles" jdbcType="VARCHAR" property="titles"/>
+        <result column="brand_name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="product_category_name" jdbcType="VARCHAR" property="productCategoryName"/>
+        <result column="dictionary1_name" jdbcType="VARCHAR" property="dictionary1Name"/>
+
+        <result column="diameter" jdbcType="DECIMAL" property="diameter"/>
+        <result column="walls" jdbcType="DECIMAL" property="walls"/>
+        <result column="widths" jdbcType="DECIMAL" property="widths"/>
+        <result column="lengths" jdbcType="DECIMAL" property="lengths"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+
+        <result column="productStatus" jdbcType="INTEGER" property="productStatus"/>
+
+
+        <result column="signing_type" jdbcType="INTEGER" property="signingType"/>
+        <result column="starting_stock" jdbcType="DECIMAL" property="startingStock"/>
+        <result column="stock" jdbcType="DECIMAL" property="stock"/>
+
+
+    </resultMap>
+
+
+
+    <select id="queryAuctionPriceList" resultMap="productAuctionBatchListResultMap">
+        SELECT p1.id,p1.`money` ,p1.`create_time`,p1.user_enterprisename
+        <if test="type != null and type != ''">
+            <if test="type == 1">
+                ,CASE WHEN (SELECT max(money) FROM pms_product_batch WHERE product_id = #{productId}) = p1.`money` THEN 1 ELSE 0 END AS isMax
+            </if>
+            <if test="type == 3">
+                ,CASE WHEN (SELECT min(money) FROM pms_product_batch WHERE product_id = #{productId}) = p1.`money` THEN 1 ELSE 0 END AS isMax
+            </if>
+
+        </if>
+         FROM pms_product_batch AS p1 WHERE p1.product_id = #{productId} AND (p1.`status` = 1 or p1.`status` = 0)
+        <if test="userId != null and userId != ''">
+            AND p1.user_id = #{userId}
+        </if>
+
+        ORDER BY p1.id DESC
+
+    </select>
+
+
+    <select id="queryBatchIndexList" resultMap="batchIndexListResultMap">
+        SELECT p2.brand_name AS brandName,p2.product_category_name AS productCategoryName,p2.type,p1.money,p1.create_time AS createTime,p1.numbers,p1.user_phone userPhone
+        FROM pms_product_batch p1 INNER JOIN pms_product p2 ON p1.product_id = p2.id
+        WHERE p1.status = 0
+        ORDER BY p1.id DESC
+
+    </select>
+
+    <select id="queryBatchPriceMax" resultType="DECIMAL">
+        SELECT
+        <choose>
+            <when test="type == 1">
+                MAX(p1.money)
+            </when>
+            <otherwise>
+                MIN(p1.money)
+            </otherwise>
+        </choose>
+         FROM pms_product_batch p1 WHERE p1.status = 0 AND p1.product_id = #{productId} AND p1.user_id = #{userId}
+    </select>
+    <select id="queryPriceByProductIdList" resultMap="productBatchListResultMap">
+        SELECT p1.id,p1.user_nickname,p1.user_phone,p1.user_enterprisename,p1.money,p1.create_time,p1.numbers,p2.signing_type,p1.`status`,concat(pro.province_name,city.city_name,county.county_name) address,
+        CASE WHEN p2.transaction_status = 2 OR now() > p2.auction_end_time THEN 2 ELSE 1 END AS productStatus
+        <if test="param.type != null and param.type != ''">
+            <if test="param.type == 1">
+                ,CASE WHEN (SELECT max(money) FROM pms_product_batch WHERE product_id = #{param.productId}) = p1.`money` THEN 1 ELSE 0 END AS isMax
+            </if>
+            <if test="param.type == 3">
+                ,CASE WHEN (SELECT min(money) FROM pms_product_batch WHERE product_id = #{param.productId}) = p1.`money` THEN 1 ELSE 0 END AS isMax
+            </if>
+
+        </if>
+        FROM pms_product_batch AS p1
+        INNER JOIN pms_product AS p2 ON p1.product_id = p2.id
+        LEFT JOIN ums_member_details AS u1 ON p1.user_id = u1.user_id
+        LEFT JOIN area_province AS pro ON u1.province = pro.province_id
+        LEFT JOIN area_city AS city ON u1.city = city.city_id
+        LEFT JOIN area_county AS county ON u1.county = county.county_id
+        WHERE p1.product_id = #{param.productId} AND (p1.`status` = 1 or p1.`status` = 0)
+
+    </select>
+
+    <select id="queryMyPriceByProductIdList" resultMap="productMyPriceByUserIdResultMap">
+        SELECT
+        p2.titles,p2.brand_name,p2.product_category_name,p2.dictionary1_name,p2.diameter,p2.walls,p2.widths,p2.lengths,p2.price,p2.auction_end_time,p2.auction_start_time,
+        CASE WHEN p2.transaction_status = 2 OR now() > p2.auction_end_time THEN 2 ELSE 1 END AS productStatus,
+        p1.id,p1.user_nickname,p1.user_phone,p1.user_enterprisename,p1.money,p1.create_time,p1.numbers,p2.signing_type,p1.`status`,p1.product_id
+        <if test="param.type != null and param.type != ''">
+            <if test="param.type == 1">
+                ,CASE WHEN (SELECT MAX(money) FROM pms_product_batch WHERE product_id = p2.id ) = p1.money THEN 1 ELSE 0 END AS isMax
+                ,(SELECT MAX(money) FROM pms_product_batch WHERE product_id = p2.id ) AS money2
+            </if>
+            <if test="param.type == 3">
+                ,CASE WHEN (SELECT MIN(money) FROM pms_product_batch WHERE product_id = p2.id ) = p1.money THEN 1 ELSE 0 END AS isMax
+                ,(SELECT MIN(money) FROM pms_product_batch WHERE product_id = p2.id ) AS money2
+            </if>
+        </if>
+        FROM pms_product_batch AS p1
+        INNER JOIN pms_product AS p2 ON p1.product_id = p2.id
+        WHERE p1.user_id = #{param.userId} AND p2.type= #{param.type}
+        <if test="param.productCategoryId != null and param.productCategoryId != ''">
+            AND p2.product_category_id = #{param.productCategoryId}
+        </if>
+
+        <if test="param.dictionary1Code != null and param.dictionary1Code != ''">
+            AND p2.dictionary1_code = #{param.dictionary1Code}
+        </if>
+        <if test="param.brandId != null and param.brandId != ''">
+            AND p2.brand_id = #{param.brandId}
+        </if>
+        <if test="param.productStatus != null and param.productStatus != ''">
+            <choose>
+                <when test="param.productStatus == 1">
+                    AND now() BETWEEN p2.auction_start_time AND p2.auction_end_time AND p2.transaction_status != 2
+                </when>
+                <when test="param.productStatus == 2">
+                    AND (now() > p2.auction_end_time OR p2.transaction_status = 2)
+                </when>
+            </choose>
+        </if>
+        <if test="param.titles != null and param.titles != ''">
+            AND p2.titles LIKE CONCAT("%",#{param.titles},"%")
+        </if>
+        <if test="param.userEnterprisename != null and param.userEnterprisename != ''">
+            AND p2.user_enterprisename LIKE CONCAT("%",#{param.userEnterprisename},"%")
+        </if>
+    </select>
+
+
+    <select id="queryMymarketPriceByProductIdList" resultMap="productMyMymarketPriceByUserIdResultMap">
+        SELECT
+        p2.titles,p2.brand_name,p2.product_category_name,p2.dictionary1_name,p2.diameter,p2.walls,p2.widths,p2.lengths,p2.price,
+        CASE WHEN p2.stock > 0 THEN 1 ELSE 2 END AS productStatus,
+        p1.id,p1.user_nickname,p1.user_phone,p1.user_enterprisename,p1.money,p1.create_time,p1.numbers,p2.signing_type,p1.`status`,p1.product_id,p2.starting_stock,p2.`stock`
+        FROM pms_product_batch AS p1
+        INNER JOIN pms_product AS p2 ON p1.product_id = p2.id
+        WHERE p1.user_id = #{param.userId} AND p2.type= 2
+        <if test="param.productCategoryId != null and param.productCategoryId != ''">
+            AND p2.product_category_id = #{param.productCategoryId}
+        </if>
+
+        <if test="param.dictionary1Code != null and param.dictionary1Code != ''">
+            AND p2.dictionary1_code = #{param.dictionary1Code}
+        </if>
+        <if test="param.brandId != null and param.brandId != ''">
+            AND p2.brand_id = #{param.brandId}
+        </if>
+        <if test="param.productStatus != null and param.productStatus != ''">
+            <choose>
+                <when test="param.productStatus == 1">
+                    AND p1.stock > 0
+                </when>
+                <when test="param.productStatus == 2">
+                    AND 0 >= p1.stock
+                </when>
+            </choose>
+        </if>
+        <if test="param.titles != null and param.titles != ''">
+            AND p2.titles LIKE CONCAT("%",#{param.titles},"%")
+        </if>
+        <if test="param.userEnterprisename != null and param.userEnterprisename != ''">
+            AND p2.user_enterprisename LIKE CONCAT("%",#{param.userEnterprisename},"%")
+        </if>
+    </select>
+
+</mapper>
